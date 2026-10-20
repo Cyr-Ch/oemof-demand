@@ -13,7 +13,7 @@ Description
 
 Heat profiles are created according to the approach described in the corresponding BDEW guideline.
 
-The method was originally established in this `PhD Thesis at TU Munich <https://mediatum.ub.tum.de/doc/601557/601557.pdf>`_.
+The method was originally established in this `PhD Thesis at TU Munich <https://nbn-resolving.org/urn:nbn:de:bvb:91-diss2003100715846>`_.
 
 The approach for generating heat demand profiles is described in section 4.1 (Synthetic load profile approach).
 

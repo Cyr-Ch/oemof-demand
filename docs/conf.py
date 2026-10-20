@@ -62,4 +62,5 @@ nitpicky = False
 linkcheck_ignore = [
     r"https://requires.io/.*",
     r"https://www.avacon-netz.de/.*",
+    r"https://nbn-resolving.org/.*"
 ]
