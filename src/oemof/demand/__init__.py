@@ -1,4 +1,4 @@
-__version__ = "0.2.3a2"
+__version__ = "0.2.3a3"
 
 from . import bdew
 from . import vdi
