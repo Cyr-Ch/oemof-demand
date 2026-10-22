@@ -11,11 +11,11 @@
 | src/oemof/demand/bdew/heat\_building.py  |       86 |        6 |       12 |        4 |     87.76% |73, 125-128, 292, 303 |
 | src/oemof/demand/config.py               |       74 |        0 |       20 |        0 |    100.00% |           |
 | src/oemof/demand/particular\_profiles.py |       39 |        1 |        8 |        1 |     95.74% |       134 |
-| src/oemof/demand/tools.py                |       14 |        0 |        6 |        0 |    100.00% |           |
+| src/oemof/demand/tools.py                |       18 |        0 |        8 |        0 |    100.00% |           |
 | src/oemof/demand/vdi/\_\_init\_\_.py     |        5 |        0 |        0 |        0 |    100.00% |           |
 | src/oemof/demand/vdi/dwd\_try.py         |       29 |        0 |        6 |        0 |    100.00% |           |
 | src/oemof/demand/vdi/regions.py          |      190 |        0 |       48 |        0 |    100.00% |           |
-| **TOTAL**                                |  **598** |    **7** |  **116** |    **5** | **98.04%** |           |
+| **TOTAL**                                |  **602** |    **7** |  **118** |    **5** | **98.06%** |           |
 
 
 ## Setup coverage badge
