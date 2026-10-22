@@ -65,9 +65,10 @@ class TestElecSLP:
         assert len(bdew.ElecSlp(2012).slp_frame.index) == 8760 * 4 + 24 * 4
 
     def test_frame_without_holidays(self):
-        my_frame = self.slp.create_bdew_load_profiles(
-            self.dt_index, self.slp_types, holidays=None
-        )
+        with pytest.warns(UserWarning, match="No holidays given"):
+            my_frame = self.slp.create_bdew_load_profiles(
+                self.dt_index, self.slp_types, holidays=None
+            )
         my_frame = pd.concat(
             [my_frame, self.slp.create_dynamic_h0_profile()], axis=1
         )

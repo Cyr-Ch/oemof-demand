@@ -18,6 +18,9 @@ Other changes
 
 * Documentation improvements.
 * First version to be named oemof.demand.
+* Warn when a profile is created without ``holidays``, because public
+  holidays are then treated as the weekday they fall on. Pass
+  ``holidays=[]`` to model a period without public holidays explicitly.
 
 
 v0.2.2 (2025-04-09)

@@ -1,5 +1,7 @@
 """Tools needed by the main classes."""
 
+import warnings
+
 import pandas as pd
 
 
@@ -45,7 +47,9 @@ def add_weekdays2df(
     return time_df
 
 
-def set_holidays_in_df(time_df: pd.DataFrame, holidays: dict | list) -> None:
+def set_holidays_in_df(
+    time_df: pd.DataFrame, holidays: dict | list | None
+) -> None:
     r"""Giving back a DataFrame containing weekdays and optionally holidays for
      the given year.
 
@@ -56,14 +60,27 @@ def set_holidays_in_df(time_df: pd.DataFrame, holidays: dict | list) -> None:
         should replaced by 0 for holidays
 
     holidays : list or dict containg dates of holidays. If a dict is chosen,
-        the key should identify the date, dict values are ignored.
+        the key should identify the date, dict values are ignored. If None,
+        a warning is issued and no holidays are set; pass an empty list to
+        model a period without public holidays without the warning.
 
     Returns
     -------
     pandas.DataFrame : DataFrame with weekdays
     """
+    if holidays is None:
+        warnings.warn(
+            "No holidays given, so public holidays are treated as the weekday"
+            " they fall on. Pass `holidays` as a list or dict of dates (for"
+            " example from the `holidays` or `workalendar` package) to model"
+            " them, or `holidays=[]` to silence this warning.",
+            UserWarning,
+            stacklevel=2,
+        )
+        return None
+
     # Set weekday to Holiday (0) for all holidays
-    if holidays is not None:
+    if len(holidays) > 0:
         if isinstance(holidays, dict):
             holidays = list(holidays.keys())
         time_df["weekday"] = time_df["weekday"].mask(

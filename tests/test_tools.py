@@ -1,6 +1,8 @@
 import datetime
+import warnings
 
 import pandas as pd
+import pytest
 
 from oemof.demand import tools
 
@@ -20,6 +22,17 @@ class TestWeekdays:
     def test_weekdays_no_holidays(self):
         dt = tools.add_weekdays2df(self.df)
         assert dt["weekday"].iloc[0] == 5
+
+    def test_warning_without_holidays(self):
+        with pytest.warns(UserWarning, match="No holidays given"):
+            dt = tools.add_weekdays2df(self.df)
+        assert (dt["weekday"] == 0).sum() == 0
+
+    def test_no_warning_with_empty_holidays(self):
+        with warnings.catch_warnings():
+            warnings.simplefilter("error")
+            dt = tools.add_weekdays2df(self.df, holidays=[])
+        assert (dt["weekday"] == 0).sum() == 0
 
     def test_weekdays_with_holidays(self):
         dt = tools.add_weekdays2df(self.df, holidays=self.holidays)

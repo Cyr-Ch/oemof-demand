@@ -151,7 +151,9 @@ Usage
     # a conversion_factor of 4 will convert Wh, kWh etc. to W, kW
     e_slp.get_scaled_power_profiles({"h0": 3000, "g0": 5000}, conversion_factor=4)
 
-    # add holidays, holidays are treated as Sundays
+    # add holidays, holidays are treated as Sundays; without the holidays
+    # argument a warning is issued and public holidays are treated as the
+    # weekday they fall on (pass holidays=[] to silence the warning)
     holidays = {
         datetime.date(2010, 1, 1): "New year",
         datetime.date(2010, 10, 3): "Day of German Unity",
