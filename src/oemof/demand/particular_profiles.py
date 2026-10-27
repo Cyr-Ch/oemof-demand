@@ -69,19 +69,22 @@ class IndustrialLoadProfile:
             assigned "night" factors.
             Default: 11:30 p.m.
         week : list(int)
-            List of weekdays, where 1 corresponds to Monday, 2 to Tuesday, etc.
-            Weekdays are assigned "week" factors from `profile_factors`.
+            List of weekdays numbered from 1 (Monday) to 7 (Sunday), with 0
+            reserved for holidays. Values must be between 0 and 7 and may not
+            occur in another day category. Weekdays are assigned "week"
+            factors from `profile_factors`.
             Default: [1, 2, 3, 4, 5].
         weekend : list(int)
-            List of weekend days, where 1 corresponds to Monday, 2 to Tuesday,
-            etc. Weekend days are assigned "weekend" factors from
-            `profile_factors`.
+            List of weekend days numbered from 0 to 7. Values must be between
+            0 and 7 and may not occur in another day category. Weekend days
+            are assigned "weekend" factors from `profile_factors`.
             Default: [6, 7].
         holiday : list(int)
             List of holiday days. Holidays given upon initialisation of the
             IndustrialLoadProfile object are tagged with weekday 0 if
             `holiday_is_sunday` is set to False, wherefore the default for this
-            parameter is [0].
+            parameter is [0]. Values must be between 0 and 7 and may not occur
+            in another day category.
             Holidays are assigned "holiday" factors from `profile_factors`.
             Default: [0].
         profile_factors : dict
@@ -116,6 +119,38 @@ class IndustrialLoadProfile:
         week = kwargs.get("week", [1, 2, 3, 4, 5])
         weekend = kwargs.get("weekend", [6, 7])
         holiday = kwargs.get("holiday", [0])
+
+        day_categories = {
+            "week": week,
+            "weekend": weekend,
+            "holiday": holiday,
+        }
+        for category, days in day_categories.items():
+            for day in days:
+                try:
+                    outside_day_range = day < 0 or day > 7
+                except TypeError as error:
+                    raise ValueError(
+                        f"Invalid day {day!r} in '{category}'; day values "
+                        "must be between 0 and 7."
+                    ) from error
+                if outside_day_range:
+                    raise ValueError(
+                        f"Invalid day {day!r} in '{category}'; day values "
+                        "must be between 0 and 7."
+                    )
+
+        category_names = list(day_categories)
+        for index, category in enumerate(category_names):
+            for other_category in category_names[index + 1 :]:
+                overlap = set(day_categories[category]) & set(
+                    day_categories[other_category]
+                )
+                if overlap:
+                    raise ValueError(
+                        f"Day categories '{category}' and '{other_category}' "
+                        f"overlap at {sorted(overlap)!r}."
+                    )
 
         default_factors = {
             "week": {"day": 0.8, "night": 0.6},
