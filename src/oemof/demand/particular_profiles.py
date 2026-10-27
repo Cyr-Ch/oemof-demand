@@ -8,7 +8,7 @@ from datetime import time as settime
 
 import pandas as pd
 
-from .tools import add_weekdays2df
+from .tools import annotate_weekdays
 
 
 class IndustrialLoadProfile:
@@ -37,7 +37,7 @@ class IndustrialLoadProfile:
 
         """
         self.dataframe = pd.DataFrame(index=dt_index)
-        self.dataframe = add_weekdays2df(
+        self.dataframe = annotate_weekdays(
             self.dataframe,
             holiday_is_sunday=holiday_is_sunday,
             holidays=holidays,
