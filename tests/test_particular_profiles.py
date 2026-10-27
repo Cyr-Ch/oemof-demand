@@ -192,6 +192,35 @@ class TestIndustrialLoadProfile:
                 profile_factors=profile_factors,
             )
 
+    @pytest.mark.parametrize(
+        "categories",
+        [
+            {"week": [1, 2, 3, 4, 5, 6], "weekend": [6, 7]},
+            {"week": [0]},
+            {"weekend": [0]},
+        ],
+    )
+    def test_simple_profile_rejects_overlapping_day_categories(self, categories):
+        with pytest.raises(ValueError, match="overlap"):
+            self.ilp.simple_profile(1.0, **categories)
+
+    @pytest.mark.parametrize(
+        "category,day",
+        [
+            ("week", -1),
+            ("week", 8),
+            ("weekend", -1),
+            ("weekend", 8),
+            ("holiday", -1),
+            ("holiday", 8),
+        ],
+    )
+    def test_simple_profile_rejects_day_numbers_outside_range(
+        self, category, day
+    ):
+        with pytest.raises(ValueError, match="between 0 and 7"):
+            self.ilp.simple_profile(1.0, **{category: [day]})
+
     def test_simple_profile_holiday_is_sunday(self):
         """
         test with default values and holiday_is_sunday = True
