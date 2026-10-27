@@ -18,7 +18,7 @@ from math import ceil
 import numpy as np
 import pandas as pd
 
-from oemof.demand.tools import add_weekdays2df
+from oemof.demand.tools import annotate_weekdays
 
 
 class HeatBuilding:
@@ -57,7 +57,7 @@ class HeatBuilding:
             "datapath", os.path.join(os.path.dirname(__file__), "bdew_data")
         )
         self.df = pd.DataFrame(index=df_index)
-        self.df = add_weekdays2df(
+        self.df = annotate_weekdays(
             self.df, holiday_is_sunday=True, holidays=kwargs.get("holidays")
         )
         self.df["hour"] = self.df.index.hour + 1  # hour of the day

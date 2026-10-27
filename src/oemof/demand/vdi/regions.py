@@ -48,7 +48,7 @@ from collections import namedtuple
 
 import pandas as pd
 
-from oemof.demand.tools import add_weekdays2df
+from oemof.demand.tools import annotate_weekdays
 from oemof.demand.vdi import dwd_try
 
 
@@ -257,7 +257,7 @@ class Region:
             days.loc[a:b, "season_fix"] = p[:-1]
 
         # Set weekdays and holidays
-        days = add_weekdays2df(days, holidays=holidays, holiday_is_sunday=True)
+        days = annotate_weekdays(days, holidays=holidays, holiday_is_sunday=True)
         days.pop("date")
 
         days["TAMB"] = self.temperature.values

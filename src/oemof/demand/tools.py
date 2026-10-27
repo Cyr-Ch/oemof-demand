@@ -5,7 +5,7 @@ import warnings
 import pandas as pd
 
 
-def add_weekdays2df(
+def annotate_weekdays(
     time_df: pd.DataFrame,
     holidays: dict | list | None = None,
     holiday_is_sunday: bool = False,
@@ -91,3 +91,7 @@ def set_holidays_in_df(
         )
 
     return None
+
+
+# Deprecated alias: the function is annotate_weekdays; external callers keep working for now.
+add_weekdays2df = annotate_weekdays

@@ -18,7 +18,7 @@ import warnings
 
 import pandas as pd
 
-from oemof.demand.tools import add_weekdays2df
+from oemof.demand.tools import annotate_weekdays
 
 from ._profiles25 import _bdew_datapath
 
@@ -147,7 +147,7 @@ class ElecSlp:
 
         # Create empty DataFrame to take the results.
         new_df = pd.DataFrame(data=0, index=dt_index, columns=slp_types)
-        new_df = add_weekdays2df(
+        new_df = annotate_weekdays(
             new_df, holidays=holidays, holiday_is_sunday=True
         )
 
